@@ -10,56 +10,10 @@ import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import type { Tool } from "./types.ts";
 
-// ---- 1. What the model sees ------------------------------------------------
+// ---- 1. What the model sees (see tool-definitions.ts) -----------------------
 
-export const listFilesTool: Tool = {
-  name: "list_files",
-  description: "List every file in the project.",
-  input_schema: { type: "object", properties: {} },
-};
-
-export const readFileTool: Tool = {
-  name: "read_file",
-  description: "Read a file from the project and return its full contents.",
-  input_schema: {
-    type: "object",
-    properties: { path: { type: "string", description: "Path relative to the project root, e.g. cart.ts" } },
-    required: ["path"],
-  },
-};
-
-export const searchTool: Tool = {
-  name: "search",
-  description: "Search every file for a text pattern. Returns matching lines as path:line: text.",
-  input_schema: {
-    type: "object",
-    properties: { pattern: { type: "string", description: "Text to look for" } },
-    required: ["pattern"],
-  },
-};
-
-export const editFileTool: Tool = {
-  name: "edit_file",
-  description:
-    "Replace one exact snippet in a file. old_string must appear exactly once. Read the file first.",
-  input_schema: {
-    type: "object",
-    properties: {
-      path: { type: "string", description: "Path relative to the project root" },
-      old_string: { type: "string", description: "Exact text to replace" },
-      new_string: { type: "string", description: "Replacement text" },
-    },
-    required: ["path", "old_string", "new_string"],
-  },
-};
-
-export const runTestsTool: Tool = {
-  name: "run_tests",
-  description: "Run the project's unit tests and return the output.",
-  input_schema: { type: "object", properties: {} },
-};
+export { editFileTool, listFilesTool, readFileTool, runTestsTool, searchTool } from "./tool-definitions.ts";
 
 // ---- 2. What your program runs ----------------------------------------------
 
